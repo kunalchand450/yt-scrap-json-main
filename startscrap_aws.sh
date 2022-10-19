@@ -22,7 +22,7 @@ pip install flask scrapy scrapy-user-agents pandas google-api-python-client json
 rm -rf scrap_app
 # tell flask the app names
 a2enmod proxy_http
-rm -rf /etc/apache2/site-enabled/*
+rm -rf /etc/apache2/sites-enabled/*
 cp scrap_app.conf /etc/apache2/sites-enabled/
 service apache2 restart
 export FLASK_APP='scrap_app'
