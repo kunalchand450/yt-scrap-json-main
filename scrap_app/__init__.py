@@ -54,12 +54,12 @@ def create_app(test_config=None):
             if request.form['website'] in spider_scraps:  #if we choose amazon here the website will amaxon scrapper or flipkart scrapper
                 subprocess.run(["mv", f"/root/crawlerenv/files/webscraper.cfg", "/root/.scrapy.cfg"]) #move Webscrapper.cfg file from crawlerenv to root due to scrapy arch will look root folder first 
                 subprocess.run(["scrapy", "crawl", "-O", os.path.join(tempfile.gettempdir(),'output.json'), "-t", "json", f"{request.form['website']}spider"]) #this is command for run scrapy file with template crwal and type csv.
-
+                return send_file(os.path.join(tempfile.gettempdir(),'output.json')) 
             # condition to select and run youtube api scraper    
             if request.form['website'] in api_scraps:
                 return redirect(url_for('scrap_api', website=request.form['website'], url=request.form['url'], auth_key=request.form['auth_key']))  # Passing to the Scrape function
 
-            return send_file(os.path.join(tempfile.gettempdir(),'output.json'))    
+               
     # condition to select and run youtube api scraper; different endpoint due to youtube api not able to give json output    
     @app.route("/scrap_api")
     def scrap_api():
