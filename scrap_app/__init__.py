@@ -35,7 +35,7 @@ def create_app(test_config=None):
     def submit():
         if request.method == 'POST':
             spider_scraps = ['amazon', 'flipkart']
-            api_scraps = ['youtube']
+            scrap_api = ['youtube']
             global input_url_final
             input_url_final = []
             input_url = request.form['url']  # Getting the Input Amazon Product URL
