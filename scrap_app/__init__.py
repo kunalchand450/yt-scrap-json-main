@@ -35,7 +35,7 @@ def create_app(test_config=None):
     def submit():
         if request.method == 'POST':
             spider_scraps = ['amazon', 'flipkart']
-            scrap_api = ['youtube']
+            api_scraps = ['youtube']
             global input_url_final
             input_url_final = []
             input_url = request.form['url']  # Getting the Input Amazon Product URL
@@ -56,9 +56,9 @@ def create_app(test_config=None):
                 subprocess.run(["scrapy", "crawl", "-O", os.path.join(tempfile.gettempdir(),'output.json'), "-t", "json", f"{request.form['website']}spider"]) #this is command for run scrapy file with template crwal and type csv.
 
             # condition to select and run youtube api scraper    
-#             if request.form['website'] in api_scraps: # this will select youtube scrapper from option
-#                 subprocess.run(["python3", f"{request.form['website']}_api_scraper.py", "-i", request.form['url'], "-a", request.form['auth_key']])
-            
+            if request.form['website'] in api_scraps:
+                return redirect(url_for('scrap_api', website=request.form['website'], url=request.form['url'], auth_key=request.form['auth_key']))  # Passing to the Scrape function
+
             return send_file(os.path.join(tempfile.gettempdir(),'output.json'))    
     # condition to select and run youtube api scraper; different endpoint due to youtube api not able to give json output    
     @app.route("/scrap_api")
