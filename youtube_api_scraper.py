@@ -6,6 +6,7 @@ import pandas as pd
 import os
 import tempfile
 import argparse
+import json
 from googleapiclient.discovery import build
 
 
@@ -90,8 +91,8 @@ def scrape_comments_with_replies(ID, api_key, youtube_agent):
     df = pd.DataFrame({'Name': [i[0] for i in box], 'Comment': [i[1] for i in box], 'Time': [i[2] for i in box],
                        'Likes': [i[3] for i in box], 'Reply Count': [i[4] for i in box]})
 
-#     df.to_json(os.path.join(tempfile.gettempdir(),'output.json'))
-    df.to_csv(os.path.join(tempfile.gettempdir(),'output.csv'))
+    df.to_json(os.path.join(tempfile.gettempdir(),'output.json'))
+#     df.to_csv(os.path.join(tempfile.gettempdir(),'output.csv'))
 
 
     return 'SUCCESS, JSON CREATED'
