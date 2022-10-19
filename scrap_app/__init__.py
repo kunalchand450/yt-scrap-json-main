@@ -65,6 +65,6 @@ def create_app(test_config=None):
     def scrap_api():
         subprocess.run(["python3", f"{request.args['website']}_api_scraper.py", "-i", request.args['url'], "-a", request.args['auth_key']])
         if request.args['website'] == 'youtube':
-            return send_file(os.path.join(tempfile.gettempdir(),'output.csv'))
+            return send_file(os.path.join(tempfile.gettempdir(),'output.json'))
                            
     return app  #start the app again
