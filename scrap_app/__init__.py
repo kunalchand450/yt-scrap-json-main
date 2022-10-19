@@ -56,9 +56,15 @@ def create_app(test_config=None):
                 subprocess.run(["scrapy", "crawl", "-O", os.path.join(tempfile.gettempdir(),'output.json'), "-t", "json", f"{request.form['website']}spider"]) #this is command for run scrapy file with template crwal and type csv.
 
             # condition to select and run youtube api scraper    
-            if request.form['website'] in api_scraps: # this will select youtube scrapper from option
-                subprocess.run(["python3", f"{request.form['website']}_api_scraper.py", "-i", request.form['url'], "-a", request.form['auth_key']])
+#             if request.form['website'] in api_scraps: # this will select youtube scrapper from option
+#                 subprocess.run(["python3", f"{request.form['website']}_api_scraper.py", "-i", request.form['url'], "-a", request.form['auth_key']])
             
             return send_file(os.path.join(tempfile.gettempdir(),'output.json'))    
-                    
+    # condition to select and run youtube api scraper; different endpoint due to youtube api not able to give json output    
+    @app.route("/scrap_api")
+    def scrap_api():
+        subprocess.run(["python3", f"{request.args['website']}_api_scraper.py", "-i", request.args['url'], "-a", request.args['auth_key']])
+        if request.args['website'] == 'youtube':
+            return send_file(os.path.join(tempfile.gettempdir(),'output.csv'))
+                           
     return app  #start the app again
