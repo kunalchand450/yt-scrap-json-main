@@ -45,20 +45,20 @@ def create_app(test_config=None):
             # This will remove any existing file with the same name so that the scrapy will not append the data to any previous file.
             if os.path.exists(os.path.join(tempfile.gettempdir(),'output.json')):
                 os.remove(os.path.join(tempfile.gettempdir(),'output.json'))
-            if os.path.exists(os.path.join(tempfile.gettempdir(),'output.csv')):
-                os.remove(os.path.join(tempfile.gettempdir(),'output.csv'))
+#             if os.path.exists(os.path.join(tempfile.gettempdir(),'output.csv')):
+#                 os.remove(os.path.join(tempfile.gettempdir(),'output.csv'))
 
             with open(os.path.join(tempfile.gettempdir(),'start_urls.json'), 'w') as writeurlobj: # here start_urls.json file will be created in write mode
                 json.dump({'urls':input_url_final}, writeurlobj)  #this command write the final input in json format which we give from frontend
             # conditions for Amazon and Flipkart
             if request.form['website'] in spider_scraps:  #if we choose amazon here the website will amaxon scrapper or flipkart scrapper
                 subprocess.run(["mv", f"/root/crawlerenv/files/webscraper.cfg", "/root/.scrapy.cfg"]) #move Webscrapper.cfg file from crawlerenv to root due to scrapy arch will look root folder first 
-                subprocess.run(["scrapy", "crawl", "-O", os.path.join(tempfile.gettempdir(),'output.csv'), "-t", "csv", f"{request.form['website']}spider"]) #this is command for run scrapy file with template crwal and type csv.
+                subprocess.run(["scrapy", "crawl", "-O", os.path.join(tempfile.gettempdir(),'output.json'), "-t", "json", f"{request.form['website']}spider"]) #this is command for run scrapy file with template crwal and type csv.
 
             # condition to select and run youtube api scraper    
             if request.form['website'] in api_scraps: # this will select youtube scrapper from option
                 subprocess.run(["python3", f"{request.form['website']}_api_scraper.py", "-i", request.form['url'], "-a", request.form['auth_key']])
             
-            return send_file(os.path.join(tempfile.gettempdir(),'output.csv'))    
+            return send_file(os.path.join(tempfile.gettempdir(),'output.json'))    
                     
     return app  #start the app again
