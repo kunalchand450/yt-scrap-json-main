@@ -19,6 +19,10 @@ NEWSPIDER_MODULE = 'webscrapers.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+}
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -48,10 +52,6 @@ ROBOTSTXT_OBEY = False
 #SPIDER_MIDDLEWARES = {
 #    'webscrapers.middlewares.WebscrapersSpiderMiddleware': 543,
 #}
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
-}
 
 # DOWNLOADER_MIDDLEWARES = {
 #             'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
